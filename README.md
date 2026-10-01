@@ -168,7 +168,7 @@ while True:
     fondo[y2:y2+alto, x2:x2+ancho] = img
 
     cv2.imshow("carro", fondo)
-
+#Matias Lopez NC 0117
     if cv2.waitKey(1) & 0xFF == 27:
         break
 
