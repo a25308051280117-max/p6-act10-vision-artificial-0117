@@ -132,3 +132,44 @@ while True:
         break
 
 cv2.destroyAllWindows()
+
+img = cv2.imread("carro.jpg")
+
+x = 0
+y = 0
+moviendo = False
+
+def mover(event, mx, my, flags, param):
+    global x, y, moviendo
+
+    if event == cv2.EVENT_LBUTTONDOWN:
+        moviendo = True
+
+    elif event == cv2.EVENT_MOUSEMOVE and moviendo:
+        x = mx - img.shape[1] // 2
+        y = my - img.shape[0] // 2
+
+    elif event == cv2.EVENT_LBUTTONUP:
+        moviendo = False
+
+cv2.namedWindow("carro")
+cv2.setMouseCallback("carro", mover)
+
+while True:
+    fondo = np.zeros((600, 800, 3), np.uint8)
+
+    # Coloca el carro en la posición del mouse
+    alto, ancho = img.shape[:2]
+
+    # Evita que se salga de la ventana
+    x2 = max(0, min(x, 800 - ancho))
+    y2 = max(0, min(y, 600 - alto))
+
+    fondo[y2:y2+alto, x2:x2+ancho] = img
+
+    cv2.imshow("carro", fondo)
+
+    if cv2.waitKey(1) & 0xFF == 27:
+        break
+
+cv2.destroyAllWindows()
